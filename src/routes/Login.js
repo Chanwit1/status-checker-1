@@ -94,11 +94,11 @@ export default function Login(props) {
           className="form-group mt-3 form-content"
           controlId="email_or_id"
         >
-          <Form.Label>อีเมลหรือรหัสนักศึกษา</Form.Label>
+          <Form.Label>อีเมลหรือรหัสนักศึกษา/พนักงาน</Form.Label>
           <Form.Control
             required
             type="text"
-            placeholder="Email or Student ID"
+            placeholder="Email or Student/Personnel ID"
             className="form-control mt-1 Form-input"
             onChange={(e) => setUsername(e.target.value)}
           />

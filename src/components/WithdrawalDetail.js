@@ -6,7 +6,7 @@ import { Row, Col } from "react-bootstrap";
 import {
   getStatusName,
   getLongDate,
-  getDecimalAmount,
+  getUserType,
 } from "../functions";
 
 import { backendURL } from "../App";
@@ -57,14 +57,17 @@ function WithdrawalDetail(props) {
                   {user.first_name} {user.last_name}
                 </Col>
 
-                <Col className="withdraw-text-top">รหัสนักศึกษา</Col>
-                <Col className="withdraw-text-bottom">{user.student_id}</Col>
+                <Col className="withdraw-text-top">ประเภทผู้ใช้งาน</Col>
+                <Col className="withdraw-text-bottom">{getUserType(user.user_type)}</Col>
+
+                <Col className="withdraw-text-top">รหัสนักศึกษา/พนักงาน</Col>
+                <Col className="withdraw-text-bottom">{user.member_id}</Col>
 
                 <Col className="withdraw-text-top">หลักสูตร</Col>
                 <Col className="withdraw-text-bottom">{user.course}</Col>
 
-                <Col className="withdraw-text-top">อาจารย์ที่ปรึกษา</Col>
-                <Col className="withdraw-text-bottom">{user.advisor}</Col>
+                {/* <Col className="withdraw-text-top">อาจารย์ที่ปรึกษา</Col>
+                <Col className="withdraw-text-bottom">{user.advisor}</Col> */}
 
                 <Col className="withdraw-label-big text-center">
                   สถานะ: {getStatusName(withdrawal.status)}
@@ -84,8 +87,7 @@ function WithdrawalDetail(props) {
                   จำนวนเงิน
                 </Col>
                 <Col xs={6} className="withdraw-card-right">
-                  {withdrawal.amount}.
-                  {getDecimalAmount(withdrawal.amount_decimal)} บาท
+                  {withdrawal.amount} บาท
                 </Col>
               </Row>
             </ListGroup>

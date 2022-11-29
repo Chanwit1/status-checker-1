@@ -8,7 +8,7 @@ import { backendURL } from "../App";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function StudentNavbar(props) {
+function MemberNavbar(props) {
 
   const navigate = useNavigate();
 
@@ -70,4 +70,4 @@ function StudentNavbar(props) {
   );
 }
 
-export default StudentNavbar;
+export default MemberNavbar;

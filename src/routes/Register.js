@@ -17,11 +17,11 @@ export default function Register(props) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [studentId, setStudentId] = useState("");
+  const [memberId, setMemberId] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [course, setCourse] = useState("");
-  const [advisor, setAdvisor] = useState("");
+  const [userType, setUserType] = useState("student");
   const [msg, setErrMsg] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
@@ -82,6 +82,11 @@ export default function Register(props) {
 
   const Register = async (e) => {
     e.preventDefault();
+    if (userType === 'admin') {
+      goToTop();
+      setShowAlert(true);
+      setErrMsg("ไม่สามารถสมัครสมาชิกเนื่องจาก header ไม่ถูกต้อง");
+    }
     try {
       await axios
         .post(
@@ -90,11 +95,11 @@ export default function Register(props) {
             first_name: firstName,
             last_name: lastName,
             email: email,
-            student_id: studentId,
+            member_id: memberId,
             password: password,
             password_confirm: passwordConfirm,
             course: course,
-            advisor: advisor,
+            user_type: userType,
           },
           { withCredentials: true }
         )
@@ -171,17 +176,16 @@ export default function Register(props) {
         </Form.Group>
         <Form.Group
           className="form-group mt-3 form-content"
-          controlId="student_id"
+          controlId="member_id"
         >
-          <Form.Label>รหัสนักศึกษา</Form.Label>
+          <Form.Label>รหัสนักศึกษา/พนักงาน</Form.Label>
           <Form.Control
             required
             type="text"
-            placeholder="Student ID"
-            maxLength="11"
-            pattern="[0-9]{11}"
+            placeholder="Student/Personnel ID"
+            maxLength="30"
             className="form-control mt-1 Form-input"
-            onChange={(e) => setStudentId(e.target.value)}
+            onChange={(e) => setMemberId(e.target.value)}
           />
         </Form.Group>
 
@@ -225,19 +229,30 @@ export default function Register(props) {
           />
         </Form.Group>
         <Form.Group
-          className="form-group mt-3 form-content"
-          controlId="advisor"
-        >
-          <Form.Label>อาจารย์ที่ปรึกษา</Form.Label>
-          <Form.Control
-            required
-            type="text"
-            placeholder="Advisor"
-            maxLength="50"
-            className="form-control mt-1 Form-input"
-            onChange={(e) => setAdvisor(e.target.value)}
-          />
-        </Form.Group>
+              className="form-group mt-3 form-content" 
+              controlId="user_type"
+            >
+              <Form.Label>ระดับผู้ใช้งาน</Form.Label>
+              <Form.Control
+                required
+                as="select"
+                type="text"
+                value={userType}
+                defaultValue="student"
+                className="form-control mt-1 Form-input"
+                onChange={(e) => setUserType(e.target.value)}
+              >
+                <option value="student">
+                  student
+                </option>
+                <option value="personnel">
+                  personnel
+                </option>
+                <option value="teacher">
+                  teacher
+                </option>
+              </Form.Control>
+            </Form.Group>
         <Container className="d-grid gap-2 mt-3 ">
           <Button
             variant="primary"

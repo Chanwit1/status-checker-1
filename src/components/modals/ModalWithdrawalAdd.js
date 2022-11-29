@@ -22,7 +22,6 @@ function ModalWithdrawalAdd(props) {
   const [docDate, setDocDate] = useState(defaultDate);
   const [status, setStatus] = useState("waiting_for_document");
   const [amount, setAmount] = useState(0);
-  const [amountDecimal, setAmountDecimal] = useState(0);
 
   const [confirm, setConfirm] = useState(false);
   const [msg, setErrMsg] = useState("");
@@ -58,7 +57,6 @@ function ModalWithdrawalAdd(props) {
             doc_date: docDate,
             status: status,
             amount: amount,
-            amount_decimal: amountDecimal,
           },
           header,
           { withCredentials: true }
@@ -108,11 +106,11 @@ function ModalWithdrawalAdd(props) {
               className="form-group mt-3 form-content"
               controlId="email_or_id"
             >
-              <Form.Label>รหัสนักศึกษาหรืออีเมล</Form.Label>
+              <Form.Label>รหัสนักศึกษา/พนักงานหรืออีเมล</Form.Label>
               <Form.Control
                 required
                 type="text"
-                placeholder="Student ID or Email"
+                placeholder="Student/Personnel ID or Email"
                 className="form-control mt-1 Form-input"
                 onChange={(e) => setInput(e.target.value)}
               />
@@ -187,29 +185,11 @@ function ModalWithdrawalAdd(props) {
                   <Form.Label>จำนวนเงิน (บาท)</Form.Label>
                   <Form.Control
                     required
-                    type="number"
+                    type="text"
                     placeholder="Amount"
-                    min="1" 
-                    max="2147483647"
+                    pattern="(0\.((0[1-9]{1})|([1-9]{1}([0-9]{1})?)))|(([1-9]+[0-9]*)(\.([0-9]{1,2}))?)"
                     className="form-control mt-1 Form-input"
                     onChange={(e) => setAmount(e.target.value)}
-                  />
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group
-                  className="form-group mt-3"
-                  controlId="amount_decimal"
-                >
-                  <Form.Label>จำนวนเงิน (สตางค์)</Form.Label>
-                  <Form.Control
-                    required
-                    type="number"
-                    placeholder="Decimal"
-                    min="0" 
-                    max="99"
-                    className="form-control mt-1 Form-input"
-                    onChange={(e) => setAmountDecimal(e.target.value)}
                   />
                 </Form.Group>
               </Col>

@@ -19,6 +19,20 @@ export function getStatusName(status) {
   }
 }
 
+export function getUserType(type) {
+  switch (type) {
+    case "student":
+      return "นักศึกษา";
+    case "personnel":
+      return "พนักงาน";
+    case "teacher":
+      return "อาจารย์";
+    default:
+      return "ERROR";
+  }
+}
+
+
 export function getShortDate(date) {
   const fDate = new Date(date);
 

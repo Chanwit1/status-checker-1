@@ -64,7 +64,7 @@ function AdminUserList(props) {
             name="search"
             type="text"
             key="withdrawal_query"
-            placeholder="Search by name, student id or email..."
+            placeholder="Search by name, member id or email..."
             disableUnderline
             onChange={handleQuery}
           />
@@ -85,9 +85,9 @@ function AdminUserList(props) {
                 <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Student ID</th>
+                <th>Student/Personnel ID</th>
                 <th>Course</th>
-                <th>Advisor</th>
+                {/* <th>Advisor</th> */}
                 <th>Role</th>
                 <th>Options</th>
               </tr>
@@ -105,9 +105,9 @@ function AdminUserList(props) {
                       {user["last_name"]}
                     </td>
                     <td>{user.email ? user.email : "-"}</td>
-                    <td>{user.student_id ? user.student_id : "-"}</td>
+                    <td>{user.member_id ? user.member_id : "-"}</td>
                     <td className="text-center">{user.course ? user.course : "-"}</td>
-                    <td className="text-center">{user.advisor ? user.advisor : "-"}</td>
+                    {/* <td className="text-center">{user.advisor ? user.advisor : "-"}</td> */}
                     <td className="text-center">{user.user_type}</td>
                     <td
                       className="text-center"

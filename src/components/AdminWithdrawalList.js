@@ -5,7 +5,6 @@ import { Row, Col, Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import {
   getStatusName,
-  getDecimalAmount,
 } from "../functions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -83,7 +82,7 @@ function AdminWithdrawalList(props) {
             name="search"
             type="text"
             key="withdrawal_query"
-            placeholder="Search by name, student id or email..."
+            placeholder="Search by name, personnel id or email..."
             disableUnderline
             onChange={handleQuery}
           />
@@ -102,7 +101,7 @@ function AdminWithdrawalList(props) {
             <thead>
               <tr className="text-center">
                 <th>ID</th>
-                <th>Student ID (Name)</th>
+                <th>Member ID (Name)</th>
                 <th>Description</th>
                 <th>Amount</th>
                 <th>Status</th>
@@ -118,14 +117,13 @@ function AdminWithdrawalList(props) {
                   >
                     <td className="text-center">{withdrawal.withdrawal_id}</td>
                     <td>
-                      {withdrawal["user.student_id"]} (
+                      {withdrawal["user.member_id"]} (
                       {withdrawal["user.first_name"]}{" "}
                       {withdrawal["user.last_name"]})
                     </td>
                     <td>{withdrawal.description}</td>
                     <td className="text-center">
-                      {withdrawal.amount}.
-                      {getDecimalAmount(withdrawal.amount_decimal)}
+                      {withdrawal.amount}
                     </td>
                     <td className="text-center">
                       {getStatusName(withdrawal.status)}

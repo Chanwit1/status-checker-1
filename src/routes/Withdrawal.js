@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import NBar from "../components/StudentNavbar";
+import NBar from "../components/MemberNavbar";
 
 import axios from "axios";
 import { backendURL } from "../App";

@@ -7,6 +7,7 @@ import Modal from "react-bootstrap/Modal";
 import Container from "react-bootstrap/Container";
 import { backendURL } from "../../App";
 import axios from "axios";
+// import { CardMembershipRounded } from "@material-ui/icons";
 
 function ModalUserEdit(props) {
   const user = props.user
@@ -14,7 +15,7 @@ function ModalUserEdit(props) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [userType, setUserType] = useState("student");
-  const [studentId, setStudentId] = useState("");
+  const [memberId, setMemberId] = useState("");
   const [course, setCourse] = useState("");
   const [advisor, setAdvisor] = useState("");
 
@@ -36,8 +37,8 @@ function ModalUserEdit(props) {
       setFirstName(user.first_name);
       setLastName(user.last_name);
       setUserType(user.user_type);
-      if (user.student_id == null) setStudentId(""); 
-        else setStudentId(user.student_id); // set to blank if null
+      if (user.member_id == null) setMemberId(""); 
+        else setMemberId(user.member_id); // set to blank if null
       if (user.course == null) setCourse("");
         else setCourse(user.course); 
       if (user.advisor == null) setAdvisor("");
@@ -77,7 +78,7 @@ function ModalUserEdit(props) {
             first_name: firstName,
             last_name: lastName,
             user_type: userType,
-            student_id: studentId,
+            member_id: memberId,
             course: course,
             advisor: advisor,
           },
@@ -173,6 +174,12 @@ function ModalUserEdit(props) {
                 <option value="student">
                   student
                 </option>
+                <option value="personnel">
+                  personnel
+                </option>
+                <option value="teacher">
+                  teacher
+                </option>
                 <option value="admin">
                   admin
                 </option>
@@ -181,16 +188,16 @@ function ModalUserEdit(props) {
 
             <Form.Group
               className="form-group mt-3 form-content"
-              controlId="student_id"
+              controlId="member_id"
             >
-              <Form.Label>รหัสนักศึกษา (admin ไม่จำเป็นต้องมี)</Form.Label>
+              <Form.Label>รหัสนักศึกษา/พนักงาน (admin ไม่จำเป็นต้องมี)</Form.Label>
               <Form.Control
                 type="text"
-                value={studentId}
-                placeholder="Student ID"
+                value={memberId}
+                placeholder="Student/Personnel ID"
                 autoComplete="off"
                 className="form-control mt-1 Form-input"
-                onChange={(e) => setStudentId(e.target.value)}
+                onChange={(e) => setMemberId(e.target.value)}
               />
             </Form.Group>
 
@@ -209,7 +216,7 @@ function ModalUserEdit(props) {
               />
             </Form.Group>
 
-            <Form.Group
+            {/* <Form.Group
               className="form-group mt-3 form-content"
               controlId="advisor"
             >
@@ -222,7 +229,7 @@ function ModalUserEdit(props) {
                 className="form-control mt-1 Form-input"
                 onChange={(e) => setAdvisor(e.target.value)}
               />
-            </Form.Group>
+            </Form.Group> */}
             
           </Container>
         </Modal.Body>

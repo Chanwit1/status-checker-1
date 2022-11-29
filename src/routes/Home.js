@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import NBar from "../components/StudentNavbar";
+import NBar from "../components/MemberNavbar";
 
 import axios from "axios";
 import { backendURL } from "../App";
@@ -109,10 +109,10 @@ export default function Home(props) {
         { withCredentials: true }
       );
       setUserType(response.data.user_type);
-      if (response.data.user_type === "student") {
-        getWithdrals(token);
-      } else if (response.data.user_type === "admin") {
+      if (response.data.user_type === "admin") {
         refreshTable(null, adminSearchQuery);
+      } else {
+        getWithdrals(token);
       }
       setName(response.data.first_name + " " + response.data.last_name);
     } catch (error) {
@@ -281,7 +281,7 @@ export default function Home(props) {
                 {AdminDisplay({ mode: adminNav })}
               </Container>
             ) : (
-              // Student
+              // General Members
               <Container>
                 {withdrawals.length === 0 ? (
                   <Container className="text-header text-center">

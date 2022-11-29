@@ -5,7 +5,6 @@ import { Row } from "react-bootstrap";
 import {
   getStatusName,
   getShortDate,
-  getDecimalAmount,
 } from "../functions";
 
 import { useNavigate } from "react-router-dom";
@@ -52,11 +51,8 @@ function WithdrawalList(props) {
                     onClick={() => navigateToItem(withdrawal.withdrawal_id)}
                   >
                     <td className="text-center">{getShortDate(withdrawal.doc_date)}</td>
-                    <td className="">{withdrawal.description}</td>
-                    <td className="">
-                      {withdrawal.amount}.
-                      {getDecimalAmount(withdrawal.amount_decimal)}
-                    </td>
+                    <td className="text-center">{withdrawal.description}</td>
+                    <td className="text-center">{withdrawal.amount}</td>
                     <td className="text-center">
                       {getStatusName(withdrawal.status)}
                     </td>
@@ -98,10 +94,7 @@ function WithdrawalList(props) {
                       {fDate.getDate()} {getShortMonthThai(fDate.getMonth())}{" "}
                       {fDate.getFullYear() + 543}
                     </Col>
-                    <Col xs={6} className="withdraw-card-right">
-                      {withdrawal.amount}.
-                      {getDecimalAmount(withdrawal.amount_decimal)} บาท
-                    </Col>
+                    <Col xs={6} className="withdraw-card-right">{withdrawal.amount}</Col>
                   </Row>
                 </ListGroup>
               </Card>

@@ -1,7 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { Checkbox } from "@mui/material";
+import { FormGroup,FormControlLabel,Typography  } from "@mui/material";
 import { Table } from "@material-ui/core";
 import Container from "react-bootstrap/Container";
-import { Row } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import {
   getStatusName,
   getShortDate,
@@ -16,6 +18,8 @@ function WithdrawalList(props) {
 
   const navigate = useNavigate();
   const withdrawals = props.withdrawals;
+  
+  const [completeHide, setCompleteHide] = useState(false);
 
   function navigateToItem(id) {
     navigate("/withdrawals/" + id);
@@ -27,9 +31,22 @@ function WithdrawalList(props) {
     <Container>
       {withdrawals.length > 0 ? (
         <Row>
-          <Container className="text-white">
-            <h5>แสดงผลลัพธ์ {withdrawals.length} รายการ</h5>
-          </Container>
+          <Row className="d-flex">
+            <Col>
+              <Container className="text-white">
+                <h5>แสดงผลลัพธ์ {withdrawals.length} รายการ</h5>
+              </Container>
+            </Col>
+            <Col className="ml-auto">
+              <FormGroup>
+                <FormControlLabel control={<Checkbox
+                 onChange={(e) => setCompleteHide(e.target.checked)}
+                 className="text-white" />} 
+                label={<Typography className="text-white">ซ่อนรายการที่โอนแล้ว</Typography>}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
           <Table
             className="color-black justify-content-center table"
             bordered="true"
@@ -45,19 +62,20 @@ function WithdrawalList(props) {
             </thead>
             <tbody>
               {withdrawals.map((withdrawal) => {
-                return (
-                  <tr
-                    key={withdrawal.withdrawal_id.toString()}
-                    onClick={() => navigateToItem(withdrawal.withdrawal_id)}
-                  >
-                    <td className="text-center">{getShortDate(withdrawal.doc_date)}</td>
-                    <td className="text-center">{withdrawal.description}</td>
-                    <td className="text-center">{withdrawal.amount}</td>
-                    <td className="text-center">
-                      {getStatusName(withdrawal.status)}
-                    </td>
-                  </tr>
-                );
+                if ( (completeHide === false && withdrawal.status === "withdrawing") || withdrawal.status !== "withdrawing" )
+                  return (
+                    <tr
+                      key={withdrawal.withdrawal_id.toString()}
+                      onClick={() => navigateToItem(withdrawal.withdrawal_id)}
+                    >
+                      <td className="text-center">{getShortDate(withdrawal.doc_date)}</td>
+                      <td className="text-center">{withdrawal.description}</td>
+                      <td className="text-center">{withdrawal.amount}</td>
+                      <td className="text-center">
+                        {getStatusName(withdrawal.status)}
+                      </td>
+                    </tr>
+                  );
               })}
             </tbody>
           </Table>

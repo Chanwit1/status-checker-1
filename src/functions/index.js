@@ -23,9 +23,9 @@ export function getUserType(type) {
   switch (type) {
     case "student":
       return "นักศึกษา";
-    case "personnel":
+    case "staff":
       return "พนักงาน";
-    case "teacher":
+    case "lecturer":
       return "อาจารย์";
     default:
       return "ERROR";

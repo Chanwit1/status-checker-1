@@ -2,7 +2,7 @@ body {
   background : #313131;
 }
 
-div {
+div, MuiTypography-root {
   font-family: 'Kanit', Courier, monospace;
 }
 

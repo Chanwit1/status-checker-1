@@ -98,7 +98,7 @@ export default function Login(props) {
           <Form.Control
             required
             type="text"
-            placeholder="Email or Student/Personnel ID"
+            placeholder="Email or Student/Staff ID"
             className="form-control mt-1 Form-input"
             onChange={(e) => setUsername(e.target.value)}
           />

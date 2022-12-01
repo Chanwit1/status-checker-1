@@ -82,7 +82,7 @@ function AdminWithdrawalList(props) {
             name="search"
             type="text"
             key="withdrawal_query"
-            placeholder="Search by name, personnel id or email..."
+            placeholder="Search by name, student/staff id or email..."
             disableUnderline
             onChange={handleQuery}
           />

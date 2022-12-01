@@ -135,7 +135,7 @@ function ModalWithdrawalEdit(props) {
                 required
                 type="text"
                 value={input}
-                placeholder="Student/Personnel ID or Email"
+                placeholder="Student/Staff ID or Email"
                 className="form-control mt-1 Form-input"
                 onChange={(e) => setInput(e.target.value)}
               />
@@ -161,7 +161,7 @@ function ModalWithdrawalEdit(props) {
               className="form-group mt-3 form-content"
               controlId="doc_date"
             >
-              <Form.Label>วันที่เบิก</Form.Label>
+              <Form.Label>วันที่ส่งเบิก</Form.Label>
               <Form.Control
                 required
                 type="date"

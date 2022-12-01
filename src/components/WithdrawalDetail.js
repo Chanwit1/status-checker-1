@@ -76,7 +76,7 @@ function WithdrawalDetail(props) {
 
               <Row className="color-black withdraw-card-padding-bottom-first">
                 <Col xs={6} className="">
-                  วันที่จัดทำเอกสาร
+                  วันที่ส่งเบิก
                 </Col>
                 <Col xs={6} className="withdraw-card-right">
                 {getLongDate(fDate)}

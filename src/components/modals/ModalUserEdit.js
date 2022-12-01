@@ -174,11 +174,11 @@ function ModalUserEdit(props) {
                 <option value="student">
                   student
                 </option>
-                <option value="personnel">
-                  personnel
+                <option value="staff">
+                  staff
                 </option>
-                <option value="teacher">
-                  teacher
+                <option value="lecturer">
+                lecturer
                 </option>
                 <option value="admin">
                   admin
@@ -194,7 +194,7 @@ function ModalUserEdit(props) {
               <Form.Control
                 type="text"
                 value={memberId}
-                placeholder="Student/Personnel ID"
+                placeholder="Student/Staff ID"
                 autoComplete="off"
                 className="form-control mt-1 Form-input"
                 onChange={(e) => setMemberId(e.target.value)}

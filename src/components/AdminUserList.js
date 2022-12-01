@@ -85,7 +85,7 @@ function AdminUserList(props) {
                 <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Student/Personnel ID</th>
+                <th>Student/Staff ID</th>
                 <th>Course</th>
                 {/* <th>Advisor</th> */}
                 <th>Role</th>

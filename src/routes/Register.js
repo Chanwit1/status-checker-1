@@ -182,7 +182,7 @@ export default function Register(props) {
           <Form.Control
             required
             type="text"
-            placeholder="Student/Personnel ID"
+            placeholder="Student/Staff ID"
             maxLength="30"
             className="form-control mt-1 Form-input"
             onChange={(e) => setMemberId(e.target.value)}
@@ -245,11 +245,11 @@ export default function Register(props) {
                 <option value="student">
                   student
                 </option>
-                <option value="personnel">
-                  personnel
+                <option value="staff">
+                  staff
                 </option>
-                <option value="teacher">
-                  teacher
+                <option value="lecturer">
+                  lecturer
                 </option>
               </Form.Control>
             </Form.Group>

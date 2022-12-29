@@ -60,6 +60,7 @@ function WithdrawalList(props) {
             </FormGroup>
             
           </Container>
+          <Container className="overflow-auto">
           <Table
             className="color-black justify-content-center table"
             bordered="true"
@@ -92,6 +93,7 @@ function WithdrawalList(props) {
               })}
             </tbody>
           </Table>
+          </Container>
         </Row>
       ) : (
         null

@@ -91,6 +91,7 @@ function AdminUserList(props) {
           <Container className="text-white">
             <h5>แสดงผลลัพธ์ {users.length} รายการ</h5>
           </Container>
+          <Container className="overflow-auto">
           <Table
             className="color-black justify-content-center table"
             bordered="true"
@@ -167,6 +168,7 @@ function AdminUserList(props) {
               })}
             </tbody>
           </Table>
+          </Container>
         </Row>
       ) : (
         <Container className="text-white">

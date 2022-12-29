@@ -163,6 +163,9 @@ function ModalUserEdit(props) {
               <option value="miss">
                 {getNameTitle("miss")}
               </option>
+              <option value="none">
+                ไม่มี (สำหรับอาจารย์)
+              </option>
             </Form.Control>
           </Form.Group>
 
@@ -248,6 +251,7 @@ function ModalUserEdit(props) {
               <Form.Label>ตำแหน่งวิชาการ (หากผู้ใช้เป็น lecturer)</Form.Label>
               <Form.Control
                 required
+                disabled={userType === "lecturer" ? false : true}
                 as="select"
                 type="text"
                 value={academicRank}
@@ -289,7 +293,7 @@ function ModalUserEdit(props) {
               <Col>
                 <Form.Group className="form-group mt-3 " 
                 controlId="department">
-                  <Form.Label>สาขาวิชา</Form.Label>
+                  <Form.Label>ภาควิชา</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Department"
@@ -304,7 +308,7 @@ function ModalUserEdit(props) {
                   className="form-group mt-3" 
                   controlId="faculty"
                 >
-                  <Form.Label>ภาควิชา</Form.Label>
+                  <Form.Label>คณะ</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Faculty"

@@ -94,6 +94,7 @@ function AdminWithdrawalList(props) {
           <Container className="text-white">
             <h5>แสดงผลลัพธ์ {withdrawals.length} รายการ</h5>
           </Container>
+          <Container className="overflow-auto">
           <Table
             className="color-black justify-content-center table"
             bordered="true"
@@ -158,6 +159,7 @@ function AdminWithdrawalList(props) {
               })}
             </tbody>
           </Table>
+          </Container>
         </Row>
       ) : (
         <Container className="text-white">

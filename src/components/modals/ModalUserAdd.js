@@ -26,9 +26,12 @@ function ModalUserAdd(props) {
   // const [course, setCourse] = useState("");
   // const [advisor, setAdvisor] = useState("");
 
+  const [stay, setStay] = useState(false); 
+
   const [dataDidUpdate, setDataDidUpdate] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const [msg, setErrMsg] = useState("");
+  const [showConfirm, setShowConfirm] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
 
   function confirmHide() {
@@ -40,10 +43,19 @@ function ModalUserAdd(props) {
   }
 
   function handleHide() {
-      setShowAlert(false);
-      setDataDidUpdate(false);
-      setConfirm(false);
-      props.onHide();
+    setShowConfirm(false);
+    setShowAlert(false);
+    setDataDidUpdate(false);
+    setConfirm(false);
+    props.onHide();
+  }
+  function handleFinishedAdd() {
+    setShowConfirm(true);
+    setNameTitle("none");
+    setFirstName("");
+    setLastName("");
+    setMemberId("");
+    setEmail("");
   }
 
   const AddUser = async (e, token) => {
@@ -77,8 +89,16 @@ function ModalUserAdd(props) {
         )
         .then(function (response) {
           if (response.status === 200) {
-            props.onResponse("เพิ่มรายการใหม่ลงอย่างสมบูรณ์");
-            handleHide();
+            console.log('stay')
+            if (stay === true) 
+            { 
+              handleFinishedAdd();
+            }
+            else 
+            { 
+              props.onResponse("เพิ่มสมาชิกใหม่อย่างสมบูรณ์");
+              handleHide();
+             }
           }
         });
     } catch (error) {
@@ -114,6 +134,13 @@ function ModalUserAdd(props) {
             ) : null}
           </Container>
           <Container>
+            {showConfirm ? (
+              <Container className="alert alert-success" role="alert">
+                เพิ่มสมาชิกใหม่อย่างสมบูรณ์
+              </Container>
+            ) : null}
+          </Container>
+        <Container>
 
         <Form.Group
             className="form-group mt-3 form-content" 
@@ -136,6 +163,9 @@ function ModalUserAdd(props) {
               </option>
               <option value="miss">
                 {getNameTitle("miss")}
+              </option>
+              <option value="none">
+                ไม่มี (สำหรับอาจารย์)
               </option>
             </Form.Control>
           </Form.Group>
@@ -287,7 +317,7 @@ function ModalUserAdd(props) {
               <Col>
                 <Form.Group className="form-group mt-3 " 
                 controlId="department">
-                  <Form.Label>สาขาวิชา</Form.Label>
+                  <Form.Label>ภาควิชา</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Department"
@@ -301,7 +331,7 @@ function ModalUserAdd(props) {
                   className="form-group mt-3" 
                   controlId="faculty"
                 >
-                  <Form.Label>ภาควิชา</Form.Label>
+                  <Form.Label>คณะ</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Faculty"
@@ -311,6 +341,19 @@ function ModalUserAdd(props) {
                 </Form.Group>
               </Col>
             </Row>
+
+            <Form.Group
+              className="form-group mt-3" 
+              controlId="stay"
+            >
+              <Form.Check 
+                type="switch"
+                label="อย่าปิดหน้าต่างเมื่อเพิ่มสำเร็จ"
+                checked={stay}
+                onChange={(e) => setStay(!stay)}
+              />
+            </Form.Group>
+            
 
             {/* <Form.Group
               className="form-group mt-3 form-content"

@@ -11,7 +11,6 @@ import { backendURL } from "./../App";
 import { useNavigate } from "react-router-dom";
 import { getAcademicRankList, getAcademicRankShort, getNameTitle } from "../functions";
 import useToken from "./../store/useToken";
-import { SignalCellularNullSharp } from "@material-ui/icons";
 
 export default function Register(props) {
   const { setToken } = useToken();
@@ -86,58 +85,73 @@ export default function Register(props) {
     }
   };
 
+  
+
   const Register = async (e) => {
+    let validation = true
     e.preventDefault();
     if (userType === 'admin') {
+      validation = false
       goToTop();
       setShowAlert(true);
       setErrMsg("ไม่สามารถสมัครสมาชิกเนื่องจาก header ไม่ถูกต้อง");
     }
     if (userType === 'student') {
       if (memberId === "") {
+        validation = false
         goToTop();
         setShowAlert(true);
         setErrMsg("กรุณากรอกรหัสรนักศึกษาด้วย");
       } else if (memberId.length < 11) {
+        validation = false
         goToTop();
         setShowAlert(true);
-        setErrMsg("รหัสรนักศึกษาควรมีตัวเลขจำนวน 11 ตัวพอดี");
+        setErrMsg("รหัสนักศึกษาควรมีตัวเลขจำนวน 11 ตัวพอดี");
       }
     }
     if (userType !== 'lecturer') {
-      setAcademicRank("none")
-    }
-    try {
-      await axios
-        .post(
-          backendURL + "/register",
-          {
-            name_title: nameTitle,
-            first_name: firstName,
-            last_name: lastName,
-            email: email,
-            member_id: memberId,
-            password: password,
-            password_confirm: passwordConfirm,
-            department: department,
-            faculty: faculty,
-            // course: course,
-            user_type: userType,
-            academic_rank: academicRank,
-          },
-          { withCredentials: true }
-        )
-        .then(function (response) {
-          if (response.status === 200) {
-            Login();
-          }
-        });
-    } catch (error) {
-      if (error.response) {
+      if (nameTitle === 'none') {
+        validation = false
         goToTop();
-        console.log(error.response.data.msg);
         setShowAlert(true);
-        setErrMsg(error.response.data.msg);
+        setErrMsg("กรุณาใส่คำหน้าชื่อปกติหากไม่ใช่อาจารย์");
+      } else {
+        setAcademicRank("none")
+      }
+    }
+    if (validation === true) {
+      try {
+        await axios
+          .post(
+            backendURL + "/register",
+            {
+              name_title: nameTitle,
+              first_name: firstName,
+              last_name: lastName,
+              email: email,
+              member_id: memberId,
+              password: password,
+              password_confirm: passwordConfirm,
+              department: department,
+              faculty: faculty,
+              // course: course,
+              user_type: userType,
+              academic_rank: academicRank,
+            },
+            { withCredentials: true }
+          )
+          .then(function (response) {
+            if (response.status === 200) {
+              Login();
+            }
+          });
+      } catch (error) {
+        if (error.response) {
+          goToTop();
+          console.log(error.response.data.msg);
+          setShowAlert(true);
+          setErrMsg(error.response.data.msg);
+        }
       }
     }
   };
@@ -179,6 +193,9 @@ export default function Register(props) {
               </option>
               <option value="miss">
                 {getNameTitle("miss")}
+              </option>
+              <option value="none">
+                ไม่มี (สำหรับอาจารย์)
               </option>
             </Form.Control>
           </Form.Group>

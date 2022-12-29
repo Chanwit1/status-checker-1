@@ -10,7 +10,7 @@ import Nav from "react-bootstrap/Nav";
 import LoadingSpinner from "../components/spinner";
 import WithdrawalList from "../components/WithdrawalList";
 import AdminWithdrawalList from "../components/AdminWithdrawalList";
-import { getErrorMessage } from "../functions";
+import { getErrorMessage, getTitleRank } from "../functions";
 import useToken from "../store/useToken";
 import useName from "../store/useName";
 import AdminUserList from "../components/AdminUserList";
@@ -114,7 +114,12 @@ export default function Home(props) {
       } else {
         getWithdrals(token);
       }
-      setName(response.data.first_name + " " + response.data.last_name);
+      const VarName = response.data.first_name;
+      const VarTitle = response.data.name_title;
+      const VarCheckusertype = response.data.user_type;
+      const VarRank = response.data.academic_rank;
+      setName(getTitleRank(VarName, VarTitle, VarCheckusertype, VarRank) + response.data.first_name + " " + response.data.last_name);
+      
     } catch (error) {
       if (error.response) {
         setStatusCode(error.response.status);

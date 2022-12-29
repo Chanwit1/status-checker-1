@@ -9,19 +9,25 @@ import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { backendURL } from "./../App";
 import { useNavigate } from "react-router-dom";
+import { getAcademicRankList, getAcademicRankShort, getNameTitle } from "../functions";
 import useToken from "./../store/useToken";
+import { SignalCellularNullSharp } from "@material-ui/icons";
 
 export default function Register(props) {
   const { setToken } = useToken();
 
+  const [nameTitle, setNameTitle] = useState("mr");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [memberId, setMemberId] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [course, setCourse] = useState("");
+  const [department, setDepartment] = useState("");
+  const [faculty, setFaculty] = useState("");
+  // const [course, setCourse] = useState("");
   const [userType, setUserType] = useState("student");
+  const [academicRank, setAcademicRank] = useState("none");
   const [msg, setErrMsg] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
@@ -87,19 +93,37 @@ export default function Register(props) {
       setShowAlert(true);
       setErrMsg("ไม่สามารถสมัครสมาชิกเนื่องจาก header ไม่ถูกต้อง");
     }
+    if (userType === 'student') {
+      if (memberId === "") {
+        goToTop();
+        setShowAlert(true);
+        setErrMsg("กรุณากรอกรหัสรนักศึกษาด้วย");
+      } else if (memberId.length < 11) {
+        goToTop();
+        setShowAlert(true);
+        setErrMsg("รหัสรนักศึกษาควรมีตัวเลขจำนวน 11 ตัวพอดี");
+      }
+    }
+    if (userType !== 'lecturer') {
+      setAcademicRank("none")
+    }
     try {
       await axios
         .post(
           backendURL + "/register",
           {
+            name_title: nameTitle,
             first_name: firstName,
             last_name: lastName,
             email: email,
             member_id: memberId,
             password: password,
             password_confirm: passwordConfirm,
-            course: course,
+            department: department,
+            faculty: faculty,
+            // course: course,
             user_type: userType,
+            academic_rank: academicRank,
           },
           { withCredentials: true }
         )
@@ -133,6 +157,31 @@ export default function Register(props) {
             {msg}
           </Container>
         ) : null}
+
+          <Form.Group
+            className="form-group mt-3 form-content" 
+            controlId="name_title"
+          >
+            <Form.Label>คำนำหน้า</Form.Label>
+            <Form.Control
+              required
+              as="select"
+              type="text"
+              defaultValue="mr"
+              className="form-control mt-1 Form-input"
+              onChange={(e) => setNameTitle(e.target.value)}
+            >
+              <option value="mr">
+                {getNameTitle("mr")}
+              </option>
+              <option value="mrs">
+                {getNameTitle("mrs")}
+              </option>
+              <option value="miss">
+                {getNameTitle("miss")}
+              </option>
+            </Form.Control>
+          </Form.Group>
 
         <Row className="form-content">
           <Col>
@@ -180,10 +229,10 @@ export default function Register(props) {
         >
           <Form.Label>รหัสนักศึกษา/พนักงาน</Form.Label>
           <Form.Control
-            required
             type="text"
             placeholder="Student/Staff ID"
             maxLength="30"
+            autoComplete="off"
             className="form-control mt-1 Form-input"
             onChange={(e) => setMemberId(e.target.value)}
           />
@@ -217,7 +266,36 @@ export default function Register(props) {
             onChange={(e) => setPasswordConfirm(e.target.value)}
           />
         </Form.Group>
-        <Form.Group className="form-group mt-3 form-content" controlId="course">
+
+        <Row className="form-content">
+          <Col>
+            <Form.Group className="form-group mt-3 " 
+            controlId="department">
+              <Form.Label>ภาควิชา</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Department"
+                className="form-control mt-1 Form-input"
+                onChange={(e) => setDepartment(e.target.value)}
+              />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group
+              className="form-group mt-3" 
+              controlId="faculty"
+            >
+              <Form.Label>คณะ</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Faculty"
+                className="form-control mt-1 Form-input"
+                onChange={(e) => setFaculty(e.target.value)}
+              />
+            </Form.Group>
+          </Col>
+        </Row>
+        {/* <Form.Group className="form-group mt-3 form-content" controlId="course">
           <Form.Label>หลักสูตร</Form.Label>
           <Form.Control
             required
@@ -227,32 +305,60 @@ export default function Register(props) {
             className="form-control mt-1 Form-input"
             onChange={(e) => setCourse(e.target.value)}
           />
+        </Form.Group> */}
+        <Form.Group
+          className="form-group mt-3 form-content" 
+          controlId="user_type"
+        >
+          <Form.Label>ระดับผู้ใช้งาน</Form.Label>
+          <Form.Control
+            required
+            as="select"
+            type="text"
+            value={userType}
+            defaultValue="student"
+            className="form-control mt-1 Form-input"
+            onChange={(e) => setUserType(e.target.value)}
+          >
+            <option value="student">
+              student
+            </option>
+            <option value="staff">
+              staff
+            </option>
+            <option value="lecturer">
+              lecturer
+            </option>
+          </Form.Control>
         </Form.Group>
         <Form.Group
-              className="form-group mt-3 form-content" 
-              controlId="user_type"
-            >
-              <Form.Label>ระดับผู้ใช้งาน</Form.Label>
-              <Form.Control
-                required
-                as="select"
-                type="text"
-                value={userType}
-                defaultValue="student"
-                className="form-control mt-1 Form-input"
-                onChange={(e) => setUserType(e.target.value)}
-              >
-                <option value="student">
-                  student
-                </option>
-                <option value="staff">
-                  staff
-                </option>
-                <option value="lecturer">
-                  lecturer
-                </option>
-              </Form.Control>
-            </Form.Group>
+          className="form-group mt-3 form-content" 
+          controlId="academic_rank"
+        >
+          <Form.Label>ตำแหน่งวิชาการ</Form.Label>
+          <Form.Control
+            required
+            disabled={userType === "lecturer" ? false : true}
+            as="select"
+            type="text"
+            defaultValue="none"
+            className="form-control mt-1 Form-input"
+            onChange={(e) => setAcademicRank(e.target.value)}
+          >
+            <option value="none">
+              {getAcademicRankList("none")}
+            </option>
+            <option value="professor">
+              {getAcademicRankList("professor")} ({getAcademicRankShort("professor")})
+            </option>
+            <option value="associate_professor">
+              {getAcademicRankList("associate_professor")} ({getAcademicRankShort("associate_professor")})
+            </option>
+            <option value="assistant_professor">
+              {getAcademicRankList("assistant_professor")} ({getAcademicRankShort("assistant_professor")})
+            </option>
+          </Form.Control>
+        </Form.Group>
         <Container className="d-grid gap-2 mt-3 ">
           <Button
             variant="primary"

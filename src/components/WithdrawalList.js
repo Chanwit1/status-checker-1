@@ -7,9 +7,23 @@ import { Row, Col } from "react-bootstrap";
 import {
   getStatusName,
   getShortDate,
+  useNameTitle
 } from "../functions";
 
 import { useNavigate } from "react-router-dom";
+import { ThemeProvider } from '@material-ui/styles'
+import { createTheme } from '@material-ui/core/styles'
+
+const theme = createTheme({
+  typography: {
+    body1: {
+      fontFamily: "'Kanit', Courier, monospace",
+      fontWeight: 400,
+      fontSize: 16,
+      color: "white"
+    }
+  }
+})
 
 function WithdrawalList(props) {
   useEffect(() => {
@@ -31,22 +45,21 @@ function WithdrawalList(props) {
     <Container>
       {withdrawals.length > 0 ? (
         <Row>
-          <Row className="d-flex">
             <Col>
               <Container className="text-white">
                 <h5>แสดงผลลัพธ์ {withdrawals.length} รายการ</h5>
               </Container>
             </Col>
-            <Col className="ml-auto">
-              <FormGroup>
+          <Container>
+          <FormGroup>
                 <FormControlLabel control={<Checkbox
                  onChange={(e) => setCompleteHide(e.target.checked)}
                  className="text-white" />} 
-                label={<Typography className="text-white">ซ่อนรายการที่โอนแล้ว</Typography>}
+                label={          <ThemeProvider theme={theme}><Typography className="text-white">ซ่อนรายการที่โอนแล้ว</Typography></ThemeProvider>}
                 />
-              </FormGroup>
-            </Col>
-          </Row>
+            </FormGroup>
+            
+          </Container>
           <Table
             className="color-black justify-content-center table"
             bordered="true"

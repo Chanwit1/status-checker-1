@@ -7,6 +7,9 @@ import {
   getStatusName,
   getLongDate,
   getUserType,
+  getAcademicRankShort,
+  getNameTitle,
+  getTitleRank,
 } from "../functions";
 
 import { backendURL } from "../App";
@@ -54,7 +57,7 @@ function WithdrawalDetail(props) {
 
                 <Col className="withdraw-text-top">ชื่อผู้เบิก</Col>
                 <Col className="withdraw-text-bottom">
-                  {user.first_name} {user.last_name}
+                {getTitleRank(user.first_name, user.name_title, user.user_type, user.academic_rank)}{user.first_name} {user.last_name}
                 </Col>
 
                 <Col className="withdraw-text-top">ประเภทผู้ใช้งาน</Col>
@@ -64,7 +67,7 @@ function WithdrawalDetail(props) {
                 <Col className="withdraw-text-bottom">{user.member_id}</Col>
 
                 <Col className="withdraw-text-top">หลักสูตร</Col>
-                <Col className="withdraw-text-bottom">{user.course}</Col>
+                <Col className="withdraw-text-bottom">ภาควิชา{user.department} คณะ{user.faculty}</Col>
 
                 {/* <Col className="withdraw-text-top">อาจารย์ที่ปรึกษา</Col>
                 <Col className="withdraw-text-bottom">{user.advisor}</Col> */}

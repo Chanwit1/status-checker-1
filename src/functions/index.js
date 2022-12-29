@@ -32,6 +32,84 @@ export function getUserType(type) {
   }
 }
 
+export function getNameTitle(type) {
+  switch (type) {
+    case "mr":
+      return "นาย";
+    case "mrs":
+      return "นาง";
+    case "miss":
+      return "นางสาว";
+    default:
+      return "";
+  }
+}
+export function getNameTitleEnglish(type) {
+  switch (type) {
+    case "mr":
+      return "Mr. ";
+    case "mrs":
+      return "Mrs. ";
+    case "miss":
+      return "Miss ";
+    default:
+      return "";
+  }
+}
+export function getAcademicRankShort(type) {
+  switch (type) {
+    case "professor":
+      return "อ.";
+    case "associate_professor":
+      return "รศ.ดร.";
+    case "assistant_professor":
+      return "ผศ.ดร.";
+    default:
+      return "";
+  }
+}
+
+export function getTitleRank(name, nameTitle, userType, rank) {
+  if (userType === 'lecturer' && rank !== 'none') {
+    return getAcademicRankShort(rank);
+  } else {
+    // if the name starts in english letter
+    if ((name.charCodeAt(0) >= 65 && name.charCodeAt(0) <= 90) || (name.charCodeAt(0) >= 97 && name.charCodeAt(0) <= 122)) {
+      return getNameTitleEnglish(nameTitle);
+    } else return getNameTitle(nameTitle);
+  }
+}
+
+
+export function getAcademicRank(type) {
+  switch (type) {
+    case "professor":
+      return "ศาสตราจารย์";
+    case "associate_professor":
+      return "รองศาสตราจารย์";
+    case "assistant_professor":
+      return "ผู้ช่วยศาสตราจารย์";
+    default:
+      return "";
+  }
+}
+
+export function getAcademicRankList(type) {
+  switch (type) {
+    case "professor":
+      return "ศาสตราจารย์";
+    case "associate_professor":
+      return "รองศาสตราจารย์";
+    case "assistant_professor":
+      return "ผู้ช่วยศาสตราจารย์";
+    case "none":
+      return "ไม่มี";
+    default:
+      return "";
+  }
+}
+
+
 
 export function getShortDate(date) {
   const fDate = new Date(date);

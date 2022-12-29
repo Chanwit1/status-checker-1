@@ -5,6 +5,7 @@ import { Row, Col, Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import {
   getStatusName,
+  getTitleRank
 } from "../functions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -110,6 +111,10 @@ function AdminWithdrawalList(props) {
             </thead>
             <tbody>
               {withdrawals.map((withdrawal) => {
+                const name = withdrawal["user.first_name"];
+                const title = withdrawal["user.name_title"];
+                const usertype = withdrawal["user.user_type"];
+                const rank = withdrawal["user.academic_rank"];
                 return (
                   <tr
                     key={withdrawal.withdrawal_id.toString()}
@@ -118,6 +123,7 @@ function AdminWithdrawalList(props) {
                     <td className="text-center">{withdrawal.withdrawal_id}</td>
                     <td>
                       {withdrawal["user.member_id"]} (
+                      {getTitleRank(name, title, usertype, rank)}
                       {withdrawal["user.first_name"]}{" "}
                       {withdrawal["user.last_name"]})
                     </td>
@@ -136,11 +142,11 @@ function AdminWithdrawalList(props) {
                     >
                       <Row className="justify-context-center">
                         <Col>
-                          <FontAwesomeIcon className="icon-small" icon={faEdit} onClick={() => {
+                          <FontAwesomeIcon className="icon-small" size="lg" icon={faEdit} onClick={() => {
                             setFocusValue(withdrawal);
                             setShowEditModal(true);
                           }}></FontAwesomeIcon>
-                          <FontAwesomeIcon className="icon-small" icon={faTrash} onClick={() => {
+                          <FontAwesomeIcon className="icon-small" size="lg" icon={faTrash} onClick={() => {
                             setFocusValue(withdrawal);
                             setShowDeleteModal(true);
                           }}></FontAwesomeIcon>
